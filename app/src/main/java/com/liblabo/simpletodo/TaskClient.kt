@@ -1,40 +1,40 @@
 package com.liblabo.simpletodo
 
+import com.google.gson.Gson
 import okhttp3.*
-import java.io.IOException
 
-class TaskClient {
+class TaskClient(callback: Callback) {
     companion object {
-        const val LIST_URL: String = ""
-        const val CREATE_URL: String = ""
-        const val UPDATE_URL: String = ""
-        const val DELETE_URL: String = ""
+        const val HOST = "http://localhost:3000"
+        const val URL: String = HOST + "/api/v1/tasks/"
     }
     val client: OkHttpClient = OkHttpClient()
+    val gson: Gson = Gson()
     val JSON: MediaType = MediaType.get("application/json; charset=utf-8")
-
+    val callback: Callback = callback
     fun list() {
         val request = Request.Builder()
-            .url(LIST_URL).get().build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        })
+            .url(URL).get().tag("LIST").build()
+        client.newCall(request).enqueue(callback)
     }
 
     fun create(task: Task) {
-        // create new task }
+        val requestBody: RequestBody = RequestBody.create(JSON, gson.toJson(task))
+        val request = Request.Builder()
+            .url(URL + task.id).post(requestBody).tag("CREATE").build()
+        client.newCall(request).enqueue(callback)
     }
     fun update(task: Task) {
-        // update task
+        val requestBody: RequestBody = RequestBody.create(JSON, gson.toJson(task))
+        val request = Request.Builder()
+            .url(URL + task.id).patch(requestBody).tag("UPDATE").build()
+        client.newCall(request).enqueue(callback)
     }
 
     fun delete(task: Task) {
-        // delete task
+        val requestBody: RequestBody = RequestBody.create(JSON, gson.toJson(task))
+        val request = Request.Builder()
+            .url(URL + task.id).delete(requestBody).tag("DELETE").build()
+        client.newCall(request).enqueue(callback)
     }
 }
