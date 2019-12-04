@@ -3,15 +3,14 @@ package com.liblabo.simpletodo
 import com.google.gson.Gson
 import okhttp3.*
 
-class TaskClient(callback: Callback) {
-    companion object {
-        const val HOST = "http://localhost:3000"
-        const val URL: String = HOST + "/api/v1/tasks/"
-    }
+class TaskClient(val callback: Callback) {
+
     val client: OkHttpClient = OkHttpClient()
-    val gson: Gson = Gson()
-    val JSON: MediaType = MediaType.get("application/json; charset=utf-8")
-    val callback: Callback = callback
+    val gson = Gson()
+    val JSON = MediaType.get("application/json; charset=utf-8")
+    val HOST = "http://localhost:3000"
+    val URL = HOST + "/api/v1/tasks/"
+
     fun list() {
         val request = Request.Builder()
             .url(URL).get().tag("LIST").build()

@@ -2,4 +2,4 @@ package com.liblabo.simpletodo
 
 import java.util.*
 
-data class Task (val id: Int, val title: String, val description: String, val created_at: Date, val updated_at: Date)
+data class Task (var id: Int, var title: String, var description: String, var created_at: Date, var updated_at: Date)
