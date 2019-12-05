@@ -24,6 +24,7 @@ class EditActivity : AppCompatActivity(), Callback, View.OnClickListener {
         editTitle = findViewById(R.id.edit_txt_title)
         editDescription = findViewById(R.id.edit_txt_description)
         val btnSave = findViewById<Button>(R.id.btn_save)
+        btnSave.setOnClickListener(this)
         btnSave.setTag("SAVE")
         if (intent.hasExtra("TASK")) {
             task = gson.fromJson(intent.getStringExtra("TASK"), Task::class.java)
