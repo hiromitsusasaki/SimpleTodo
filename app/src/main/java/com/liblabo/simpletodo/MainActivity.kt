@@ -31,6 +31,10 @@ class MainActivity : AppCompatActivity() , Callback, AdapterView.OnItemClickList
         adapter = TaskListAdapter(this, R.layout.task_list_item, taskList)
         taskListView.adapter = adapter
         taskListView.setOnItemClickListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
         TaskClient(this).list()
     }
 
