@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import androidx.appcompat.widget.Toolbar
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import okhttp3.Call
@@ -58,5 +62,21 @@ class MainActivity : AppCompatActivity() , Callback, AdapterView.OnItemClickList
                 putExtra("TASK", gson.toJson(task))
             }
             startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+       when (item.itemId) {
+           R.id.action_add_task -> {
+               val intent = Intent(this, EditActivity::class.java)
+               startActivity(intent)
+               return true
+           }
+       }
+       return super.onOptionsItemSelected(item)
     }
 }
