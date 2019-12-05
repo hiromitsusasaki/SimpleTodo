@@ -1,9 +1,12 @@
 package com.liblabo.simpletodo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -12,7 +15,7 @@ import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
 
-class MainActivity : AppCompatActivity() , Callback {
+class MainActivity : AppCompatActivity() , Callback, AdapterView.OnItemClickListener {
     val taskList: ArrayList<Task> = ArrayList()
     val gson: Gson = Gson()
     val handler = Handler()
@@ -46,5 +49,13 @@ class MainActivity : AppCompatActivity() , Callback {
                 adapter?.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val task = taskList.get(position)
+        val intent = Intent(this, DetailActivity::class.java).apply {
+                putExtra("TASK", gson.toJson(task))
+            }
+            startActivity(intent)
     }
 }
