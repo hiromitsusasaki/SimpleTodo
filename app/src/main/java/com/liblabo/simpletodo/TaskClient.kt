@@ -8,7 +8,7 @@ class TaskClient(val callback: Callback) {
     val client: OkHttpClient = OkHttpClient()
     val gson = Gson()
     val JSON = MediaType.get("application/json; charset=utf-8")
-    val HOST = "http://localhost:3000"
+    val HOST = "http:/10.0.2.2:3000"
     val URL = HOST + "/api/v1/tasks/"
 
     fun list() {
