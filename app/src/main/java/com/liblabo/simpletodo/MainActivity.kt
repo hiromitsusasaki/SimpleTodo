@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() , Callback, AdapterView.OnItemClickList
         var taskListView: ListView = findViewById(R.id.list_task)
         adapter = TaskListAdapter(this, R.layout.task_list_item, taskList)
         taskListView.adapter = adapter
+        taskListView.setOnItemClickListener(this)
         TaskClient(this).list()
     }
 
