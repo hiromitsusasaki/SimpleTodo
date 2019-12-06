@@ -48,11 +48,8 @@ class MainActivity : AppCompatActivity() , Callback, AdapterView.OnItemClickList
         handler.post {
             if (call.request().tag()!!.equals("LIST")) {
                 val jsonObject = gson.fromJson(jsonString, JsonObject::class.java)
-                Log.d(this.javaClass.name, jsonObject.toString())
                 val jsonArray = jsonObject.getAsJsonArray("data")
-                Log.d(this.javaClass.name, jsonArray.toString())
                 val tasks = gson.fromJson<Array<Task>>(jsonArray, Array<Task>::class.java)
-                Log.d(this.javaClass.name, tasks.toString())
                 taskList.clear()
                 taskList.addAll(tasks)
                 adapter?.notifyDataSetChanged()

@@ -2,6 +2,7 @@ package com.liblabo.simpletodo
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -18,6 +19,7 @@ class EditActivity : AppCompatActivity(), Callback, View.OnClickListener {
     var task: Task = Task()
     var editTitle: EditText? = null
     var editDescription: EditText? = null
+    val handler = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
@@ -37,13 +39,17 @@ class EditActivity : AppCompatActivity(), Callback, View.OnClickListener {
     }
 
     override fun onFailure(call: Call, e: IOException) {
-        Toast.makeText(this, "Request failed", Toast.LENGTH_SHORT)
+        handler.post() {
+            Toast.makeText(this, "Request failed", Toast.LENGTH_SHORT)
+        }
     }
 
     override fun onResponse(call: Call, response: Response) {
-        when (call.request().tag()) {
-            "CREATE" -> Toast.makeText(this, "Saved task", Toast.LENGTH_SHORT)
-            "UPDATE" -> Toast.makeText(this, "Updated task", Toast.LENGTH_SHORT)
+        handler.post() {
+            when (call.request().tag()) {
+                "CREATE" -> Toast.makeText(this, "Saved task", Toast.LENGTH_SHORT)
+                "UPDATE" -> Toast.makeText(this, "Updated task", Toast.LENGTH_SHORT)
+            }
         }
         intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
